@@ -12,23 +12,40 @@ class Crawler(object):
 
     ignorewords = set(['a','o','de','e', 'em']) 
 
+    def __init__(self, dbname):
+      self.con = sqllite.connect(dbname)
+
     def __del__(self):
-        pass;
+        self.com.close();
     
     def dbcommit(self):
-        pass;
+        self.com.commit();
     
     def getentryid(self, table, field, value, createnew=True):
         return None;
     
-    def addtoindex(self, url, soup):
-        print 'indexing %s' % url;
+    def adtoindex(self, url, soup):
+        if self.isindexed(url): return;
+        print 'indexing %s', %url
+        text = self.gettextonly(soup)
+        words = self.separatewords(text)
 
     def gettextonly(self, soup):
-        return None;
+        v = soup.string
+        if v == None:
+            c=soup.contents
+        resulttext = ''
+        for t in c:
+          subtext = self.gettextonly(t)
+          resulttext += subtext+'\n'
+        return resulttext
+      else:
+        return v.strip()
+
 
     def separatewords(self, text):
-        return None;
+        sppliter = re.compile('\\W*')
+        return [s.lower() for s in sppliter(text) if s != '']
 
     def isindexed(self, url):
         return False;
@@ -62,4 +79,13 @@ class Crawler(object):
                 pages = newpages
 
     def createindextables(self):
-        pass;   
+        self.con.execute('create table urllist (url)')
+        self.con.execute('create table wordlist (word)')
+        self.con.execute('create table wordlocation (urlid, wordid, location)')
+        self.con.execute('create table link (fromid integer, toid integer)')
+        self.con.execute('create table linkwords (wordid, linkid)')
+        self.con.execute('create index wordidx on wordlist(word)')
+        self.con.execute('create index urlidx on urllist(url)')
+        self.con.execute('create index wordurlidx on wordlocation (wordid)')
+        self.con.execute('create index urltoidx on link(toid)')
+        self.con.execute('create index urlfromidx on link(fromid)')
