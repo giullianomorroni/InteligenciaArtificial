@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 '''
 Created on 26/07/2012
 
@@ -7,47 +8,66 @@ Created on 26/07/2012
 import urllib2
 from BeautifulSoup import *
 from urlparse import urljoin
+from pysqlite2 import dbapi2 as sqlite
+
+ignorewords = set(['a', 'o', 'de', 'e', 'em']) 
 
 class Crawler(object):
 
-    ignorewords = set(['a','o','de','e', 'em']) 
-
     def __init__(self, dbname):
-      self.con = sqllite.connect(dbname)
+        self.con = sqlite.connect(dbname)
 
     def __del__(self):
-        self.com.close();
+        self.con.close();
     
     def dbcommit(self):
-        self.com.commit();
+        self.con.commit();
     
     def getentryid(self, table, field, value, createnew=True):
-        return None;
-    
-    def adtoindex(self, url, soup):
+        cur = self.con.execute("select rowid from %s where %s= '%s' " % (table,field,value))
+        res = cur.fetchone()
+        if res == None:
+            cur = self.con.execute("insert into %s (%s) values ('%s')" % (table,field,value))
+            return cur.lastrowid
+        else:
+            return res[0]
+
+    def addtoindex(self, url, soup):
         if self.isindexed(url): return;
-        print 'indexing %s', %url
+        print 'indexing ' + url
         text = self.gettextonly(soup)
         words = self.separatewords(text)
+        urlid=self.getentryid('urllist', 'url', url)
+        
+        for i in range(len(words)):
+            word=words[i]
+            if word in ignorewords: continue
+            wordid=self.getentryid('wordlist', 'word', word)
+            self.con.execute("insert into wordlocation (urlid,wordid,location) values (%d,%d,%d)" %(urlid, wordid, i)) 
+        
 
     def gettextonly(self, soup):
         v = soup.string
-        if v == None:
-            c=soup.contents
         resulttext = ''
-        for t in c:
-          subtext = self.gettextonly(t)
-          resulttext += subtext+'\n'
-        return resulttext
-      else:
-        return v.strip()
+        if v == None:
+            c = soup.contents
+            for t in c:
+                subtext = self.gettextonly(t)
+                resulttext += subtext + '\n'
+            return resulttext
+        else:
+            return v.strip()
 
 
     def separatewords(self, text):
-        sppliter = re.compile('\\W*')
-        return [s.lower() for s in sppliter(text) if s != '']
+        splitter = re.compile('\\W*')
+        return [s.lower() for s in splitter.split(text) if s != '']
 
     def isindexed(self, url):
+        u = self.con.execute("select rowid from urllist where url='%s'" % url).fetchone()
+        if u != None:
+            v = self.con.execute("select * from wordlocation where urlid = '%s'" % u[0]).fetchone()
+            if v!= None: return True;
         return False;
 
     def addlinkref(self, urlfrom, utlto, linktext):
@@ -55,7 +75,7 @@ class Crawler(object):
 
     def crawl(self, pages, depth=2):
         for i in range(depth):
-            newpages= set()
+            newpages = set()
             for page in pages:
                 try:
                     c = urllib2.urlopen(page);
@@ -68,8 +88,8 @@ class Crawler(object):
                 links = soup('a')
                 for link in links:
                     if ('href' in dict(link.attrs)):
-                        url=urljoin(page,link['href'])
-                        if url.find('´') != -1: continue
+                        url = urljoin(page, link['href'])
+                        if url.find("'") != -1: continue
                         url = url.split('#')[0]
                         if url[0:4] == 'http' and not self.isindexed(url):
                             newpages.add(url)
