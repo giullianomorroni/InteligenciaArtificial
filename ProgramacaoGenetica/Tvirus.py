@@ -37,6 +37,10 @@ class comando():
     print 'copiar'
     return True
 
+  def transferir(self):
+    print 'copiar'
+    return True
+    
   def atacar(self):
     print 'atacar'
     return False
@@ -48,3 +52,15 @@ class comando():
   def propagar(self):
     print 'propagar'
     return False
+    
+  def desligar(self):
+    print 'desligar'
+    return False
+    
+  def executar(self):
+    print 'executar'
+    return False
+    
+  def hibernar(self):
+    print 'hibernar'
+    return False      

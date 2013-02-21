@@ -2,20 +2,21 @@
 
 from Tvirus import comando
 
-genetica = [];
+class particula:
+  cromossomo = {};
 
-c = comando();
-ap = c.apagar();
-cp = c.copiar();
-at = c.atacar();
+  def __init__(self, genetica):
+     self.cromossomo = genetica;
 
-if(ap and cp and at):
-   genetica.append(c.apagar.__name__)
-elif(ap and cp):
-   genetica.append(c.apagar.__name__)
-elif(ap):
-   genetica.append(c.apagar.__name__)
+  def __str__(self):
+    c = comando()
+    resultado = ''
+    for g in cromossomo:
+      retorno += ' ' + g
+    return resultado
 
-for g in genetica:
-  func = getattr(c, g)
-  func()
+  def infectar(self):
+    c = comando()
+    for g in cromossomo:
+      func = getattr(c, g)
+      func()
