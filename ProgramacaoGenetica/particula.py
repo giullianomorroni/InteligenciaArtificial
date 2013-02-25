@@ -1,22 +1,43 @@
 # -*- coding: utf-8 -*-
 
 from Tvirus import comando
+import decimal
 
 class particula:
-  cromossomo = {};
+  global cromossomo;
+  global totalComandos;
+  global totalComandosSucedidos;
 
   def __init__(self, genetica):
-     self.cromossomo = genetica;
+    self.cromossomo = genetica;
+    self.totalComandos = 0;
+    self.totalComandosSucedidos = 0;
 
   def __str__(self):
-    c = comando()
     resultado = ''
-    for g in cromossomo:
-      retorno += ' ' + g
+    for gene in self.cromossomo:
+      if type(gene) is list:
+	for subgene in gene:
+	  resultado += str(subgene) + ' # '
+      else:
+	resultado += str(gene) + ' # '
     return resultado
 
   def infectar(self):
     c = comando()
-    for g in cromossomo:
-      func = getattr(c, g)
-      func()
+    for gene in self.cromossomo:
+      if type(gene) is list:
+	for subgene in gene:
+	  func = getattr(c, subgene)
+      else:
+	func = getattr(c, gene)
+      self.totalComandos += 1;
+      resultadoComando = func()
+      if (resultadoComando == True):
+	self.totalComandosSucedidos += 1;
+
+  def taxaSucesso(self):
+    print 'Total Comandos:' + str(self.totalComandos) + ' Comandos Sucedidos:' + str(self.totalComandosSucedidos)
+    if (self.totalComandosSucedidos == 0):
+      return 0;
+    return (decimal.Decimal(self.totalComandosSucedidos)/ decimal.Decimal(self.totalComandos))

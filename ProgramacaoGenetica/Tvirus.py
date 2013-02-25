@@ -7,7 +7,7 @@ class comando():
   '''
   Gera mutações diferentes do mesmo vírus, baseado em uma função randômica.
   '''
-  def variacoes(self):
+  def mutacao(self):
     r = random.randint(0,10)
     mutacao = []
     if (r == 0):
@@ -30,37 +30,37 @@ class comando():
     return mutacao
 
   def apagar(self):
-    print 'apagar'
+    # print 'apagar'
     return True
 
   def copiar(self):
-    print 'copiar'
+    # print 'copiar'
     return True
 
   def transferir(self):
-    print 'copiar'
+    # print 'copiar'
     return True
     
   def atacar(self):
-    print 'atacar'
+    # print 'atacar'
     return False
 
   def hospedar(self):
-    print 'hospedar'
+    # print 'hospedar'
     return True
 
   def propagar(self):
-    print 'propagar'
+    # print 'propagar'
     return False
     
   def desligar(self):
-    print 'desligar'
+    # print 'desligar'
     return False
     
   def executar(self):
-    print 'executar'
+    # print 'executar'
     return False
     
   def hibernar(self):
-    print 'hibernar'
+    # print 'hibernar'
     return False      
