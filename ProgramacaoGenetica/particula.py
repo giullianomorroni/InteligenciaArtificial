@@ -40,4 +40,4 @@ class particula:
     print 'Total Comandos:' + str(self.totalComandos) + ' Comandos Sucedidos:' + str(self.totalComandosSucedidos)
     if (self.totalComandosSucedidos == 0):
       return 0;
-    return (decimal.Decimal(self.totalComandosSucedidos)/ decimal.Decimal(self.totalComandos))
+    return (decimal.Decimal(self.totalComandosSucedidos)/ decimal.Decimal(self.totalComandos)) * 100
