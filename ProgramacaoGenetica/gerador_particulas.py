@@ -44,7 +44,7 @@ for i in range(1,11):
 variacoes = []
 
 '''
-Criação das partículas
+Criação das partículas (populacao)
 '''
 for i in range(1,21):
   while (i >= 11):
@@ -54,7 +54,7 @@ for i in range(1,21):
   p = particula(genetica[i])
   variacoes.append(p)
 
-print [str(v) for v in variacoes];
+#print [str(v) for v in variacoes];
 
 arq_variacoes = open('variacoes', 'w')
 cPickle.dump(variacoes, arq_variacoes)

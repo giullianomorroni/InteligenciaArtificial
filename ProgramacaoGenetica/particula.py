@@ -14,14 +14,7 @@ class particula:
     self.totalComandosSucedidos = 0;
 
   def __str__(self):
-    resultado = ''
-    for gene in self.cromossomo:
-      if type(gene) is list:
-	for subgene in gene:
-	  resultado += str(subgene) + ' # '
-      else:
-	resultado += str(gene) + ' # '
-    return resultado
+    return str(self.cromossomo)
 
   def infectar(self):
     c = comando()

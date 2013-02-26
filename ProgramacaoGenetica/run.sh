@@ -13,13 +13,22 @@
 '''
 import gerador_particulas
 
+
 #PASSO 2 - EXECUTAR CICLO DE INFECÇÕES
 import cPickle
 variacoes = cPickle.load(open('variacoes'))
+nova_populacao = []
 for v in variacoes:
   v.infectar()
   taxa = v.taxaSucesso()
-  print (taxa)
+  #print (taxa)
+  if taxa >= 50:
+    nova_populacao.append(v)
+
+arq = open('nova_populacao', 'w')
+cPickle.dump(nova_populacao, arq)
+arq.close()
+
 
 #PASSO 3 - SEPARAR OS BEM SUCEDIDOS
-
+import cruzamento_particulas
