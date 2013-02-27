@@ -32,3 +32,9 @@ arq.close()
 
 #PASSO 3 - SEPARAR OS BEM SUCEDIDOS
 import cruzamento_particulas
+
+#PASSO 4 - EXIBIR POPULAÇÃO RESULTANTE
+variacoes = cPickle.load(open('novas_variacoes'))
+for v in variacoes:
+  v.infectar()
+  taxa = v.taxaSucesso()

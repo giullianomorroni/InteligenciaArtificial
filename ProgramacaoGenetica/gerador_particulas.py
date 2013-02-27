@@ -6,6 +6,11 @@ from particula import particula
 
 genetica = {};
 c = comando();
+
+'''
+Geração dos cromossomos
+'''
+'''
 ap = 'apagar';
 cp = 'copiar';
 at = 'atacar';
@@ -16,9 +21,6 @@ dl = 'desligar';
 ex = 'executar';
 hb = 'hibernar';
 
-'''
-Geração dos cromossomos
-'''
 for i in range(1,11):
   if (i == 1):
     genetica[i] = (ap, cp)
@@ -40,6 +42,9 @@ for i in range(1,11):
     genetica[i] = (ap, hb)
   elif (i == 10):
     genetica[i] = (dl, hb)
+'''
+for i in range(1,11):
+  genetica[i] = c.mutacao()
 
 variacoes = []
 

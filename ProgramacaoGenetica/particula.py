@@ -16,6 +16,9 @@ class particula:
   def __str__(self):
     return str(self.cromossomo)
 
+  def genetica(self):
+    return self.cromossomo
+
   def infectar(self):
     c = comando()
     for gene in self.cromossomo:
