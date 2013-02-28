@@ -1,0 +1,45 @@
+Programação genética é um campo de estudo amplo e ativo nas comunidades acadêmicas, neste artigo irei abordar um exemplo prático, demonstrando um algoritmo que simula um vírus de computador (nenhum dano será causado aos computadores).
+
+Antes de mais nada, para se criar um algoritmo é preciso ter em mente o problema que ele atenderá.
+
+PROBLEMA: Criar um vírus que seja capaz de evoluir atráves de adaptação e mutação, sem intervenção humana. Realizando comandos suficientes para infectar, roubar e 'destruir' computadores.
+
+O primeiro passo é gerar uma população inicial, neste caso, serão geradas algumas variações do vírus, de forma randômica. As variações poderão ter os seguintes genes
+
+apagar - Apagar arquivos importantes
+propagar - Espalhar a partícula para outros computadores na mesma rede
+roubar - Roubar informações do computador, transferindo-as para outro
+copiar - Copiar dados de uma fonte externa para dentro do computador
+atacar - Realizar ataques a sites externos
+hibernar - Manter-se quieto
+desligar - Desligar um computador
+executar - Executar um comando no computador
+
+Cada variação do vírus será chamada de partícula, desse modo, cada partícula contêm um cromossomo(união dos genes) formando assim um genética.
+
+O segundo passo é pegar a população inicial (conjunto de partículas) e espalha-los por alguns computadores. Vamos analisar algumas possíveis partículas de exemplo:
+
+partícula_ex_01
+  genética
+    propagar
+    copiar
+      executar
+      apagar
+
+partícula_ex_02
+  genética
+    propagar
+    atacar
+    desligar
+
+partícula_ex_03
+  genética
+    desligar
+    executar
+      hibernar
+    
+Os exemplos estão bem intuitivos, as partículas tentam realizar a sequência genética que lhes foram concebidas, na ordem em que aparecem. A cada tentativa de infecção a partícula grava a taxa de porcentagem de sucesso. Essa taxa é importante para que possamos realizar a evolução (seleção natural de Charles Darwin).
+
+Analisando a terceira partícula, logo percebemos que sua taxa de sucesso é baixa pois ela desliga o computador para depois tentar executar algo e por fim hibernar, se ela obtiver sucesso no desligamento as demais sequências não seram executas e se falhar a taxa de sucesso é zero. O que eliminaria esta partícula da nossa evolução.
+
+Nosso terceiro passo é separar toda a população gerada e analisar suas taxas. Os melhores serão promovidos para formarem a segunda geração, em busca da melhor resposta para o nosso problema.
