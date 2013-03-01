@@ -1,3 +1,6 @@
 sudo easy_install numpy
 sudo easy_install networkx
 sudo easy_install twitter
+sudo yum install graphviz-python
+sudo yum install libgraphviz-dev
+sudo easy_install pygraphviz

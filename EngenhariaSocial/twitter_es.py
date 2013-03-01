@@ -2,6 +2,7 @@ import twitter
 import json
 import nltk
 import re
+import networkx as nx
 
 t = twitter.Twitter(domain='search.twitter.com')
 
@@ -62,8 +63,41 @@ t = twitter.Twitter(domain='search.twitter.com')
 
 #Busca por RT
 #padrao = re.compile(r'(RT|via)((?:\b\W*@\w+)+)', re.IGNORECASE )
-padrao = re.compile(r'(RT|via)(.@\w+)', re.IGNORECASE )
+#padrao = re.compile(r'(RT|via)(.@\w+)', re.IGNORECASE )
 #entra somente quem possui (RT OU via) E (@...)
-exemplos = ['RT @giulliano funciona', 'funciona mesmo (via @giulliano)', 'esse nao (@giulliano)'] 
-for e in exemplos:
-    print padrao.findall(e)
+#exemplos = ['RT @giulliano funciona', 'funciona mesmo (via @giulliano)', 'esse nao (@giulliano)'] 
+#for e in exemplos:
+#    print padrao.findall(e)
+
+
+#Grafico com RT por assuntos
+g = nx.DiGraph()
+resultados = t.search(q='BBB13', rpp=300, page=1)
+tweets = []
+for r in resultados['results']:
+  tweets.append(r)
+
+def origemRt(tweet):
+    padrao = re.compile(r'(RT|via)(.@\w+)', re.IGNORECASE )
+    return [origem.strip() for tupla in padrao.findall(tweet) for origem in tupla if origem not in ('RT', 'via') ]
+
+for t in tweets:
+    rt_origem = origemRt( t['text'] )
+    if not rt_origem: continue
+    for origem in rt_origem:
+        g.add_edge (origem, t['from_user'], {'twitter_id' : t['id']})
+      
+print 'number_of_nodes'
+print g.number_of_nodes()
+
+print 'number_of_edges'
+print g.number_of_edges()
+
+print 'edges'
+print g.edges(data=True)[0]
+
+print 'len connected_components'
+print len(nx.connected_components(g.to_undirected()))
+
+print 'sorted degree'
+print sorted(nx.degree(g))
