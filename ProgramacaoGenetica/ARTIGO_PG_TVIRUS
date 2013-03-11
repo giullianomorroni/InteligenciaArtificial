@@ -1,10 +1,12 @@
-Programação genética é um campo de estudo amplo e ativo nas comunidades acadêmicas, neste artigo irei abordar um exemplo prático, demonstrando um algoritmo que simula um vírus de computador (nenhum dano será causado aos computadores).
+Programação genética é um campo de estudo amplo e ativo nas comunidades acadêmicas, neste artigo irei abordar um exemplo prático, demonstrando um algoritmo que simula um vírus de computador (nenhum dano será causado aos computadores). Neste exemplor iremos criar um vírus que seja capaz de evoluir atráves de adaptação e mutação, sem intervenção humana. Realizando comandos suficientes para infectar, roubar, 'destruir', dentre outras possibilidades.
 
-Antes de mais nada, para se criar um algoritmo é preciso ter em mente o problema ao qual ele atende.
+Pode-se dizer que tudo se resume a 3 eventos. Estes eventos acontecerão em um ciclo repetitivo até que se encontre o que se chama de ideal. Estes eventos são resumidos em :
 
-PROBLEMA: Criar um vírus que seja capaz de evoluir atráves de adaptação e mutação, sem intervenção humana. Realizando comandos suficientes para infectar, roubar e 'destruir' computadores.
+Evento 1 - Gerar uma população inicial, preferencialmente seguindo um não-lógica.
+Evento 2 - Espalhar nossos vírus para alguns computadores
+Evento 3 - Separar toda a população gerada e analisar suas taxas. Os melhores serão promovidos para formarem a próxima geração (evento 1)
 
-O primeiro passo é gerar uma população inicial, neste caso, serão geradas algumas variações do vírus, de forma randômica. As variações poderão ter os seguintes genes
+Para a população inicial, serão geradas algumas variações do vírus, de forma randômica. As variações poderão ter os seguintes genes
 
 apagar - Apagar arquivos importantes
 propagar - Espalhar a partícula para outros computadores na mesma rede
