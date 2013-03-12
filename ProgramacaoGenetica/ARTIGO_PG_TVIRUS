@@ -2,9 +2,10 @@ Programação genética é um campo de estudo amplo e ativo nas comunidades acad
 
 Pode-se dizer que tudo se resume a 3 eventos. Estes eventos acontecerão em um ciclo repetitivo até que se encontre o que se chama de ideal. Estes eventos são resumidos em :
 
-Evento 1 - Gerar uma população inicial, preferencialmente seguindo um não-lógica.
-Evento 2 - Espalhar nossos vírus para alguns computadores
-Evento 3 - Separar toda a população gerada e analisar suas taxas. Os melhores serão promovidos para formarem a próxima geração (evento 1)
+Evento 1 - Gerar uma população
+Evento 2 - Espalhar o vírus
+Evento 3 - Coletar e analisar taxa de sucesso. (Os mais bem sucedidos formarão a próxima geração (evento 1))
+
 
 Para a população inicial, serão geradas algumas variações do vírus, de forma randômica. As variações poderão ter os seguintes genes
 
@@ -17,10 +18,9 @@ hibernar - Manter-se quieto
 desligar - Desligar um computador
 executar - Executar um comando no computador
 
-Cada variação do vírus será chamado de partícula, desse modo, cada partícula contêm um cromossomo (união dos genes) formando assim uma genética.
+Cada variação do vírus será chamado de partícula. Cada partícula contêm um cromossomo (união dos genes) formando assim uma genética.
 
-O segundo passo é pegar a população inicial (conjunto de partículas) e espalhá-los por alguns computadores. Vamos analisar algumas possíveis partículas de exemplo:
-
+Exemplos de partículas:
 partícula_ex_01
   genética
     propagar
@@ -39,9 +39,25 @@ partícula_ex_03
     desligar
     executar
       hibernar
-    
-Os exemplos estão bem intuitivos, as partículas tentam realizar a sequência genética que lhe foi dada, na ordem em que aparecem. A cada tentativa de infecção a partícula grava a taxa de porcentagem de sucesso. Essa taxa é importante para que possamos realizar a evolução (seleção natural de Charles Darwin).
+
+
+Os exemplos são auto-explicativos. Cada partícula tem sua 'razão de existência', executar o que ela sabe. A cada tentativa de infecção a partícula grava a taxa de porcentagem de sucesso. Essa taxa é importante para que possamos realizar a evolução (seleção natural de Charles Darwin).
 
 Analisando a terceira partícula, logo percebemos que sua taxa de sucesso é baixa pois ela desliga o computador para depois tentar executar algo e por fim hibernar, se ela obtiver sucesso no desligamento as demais sequências não seram executas e se falhar a taxa de sucesso é zero. O que eliminaria esta partícula da nossa evolução.
 
-Nosso terceiro passo é separar toda a população gerada e analisar suas taxas. Os melhores serão promovidos para formarem a segunda geração, em busca da melhor resposta para o nosso problema.
+Por fim o último evento separa toda a população gerada, analisando sua taxa de sucesso. Por praticidade a taxa é o resultado percentual do total de genes existentes na partícula. Para cada execução bem sucedida a taxa é acrescida desse valor, por exemplo:
+
+partícula_ex_10
+  genética
+    propagar
+    atacar
+    desligar
+    executar
+    hibernar
+    
+Para a 'partícula_ex_10' cada gene possui um valor de 20 (soma do total dividido pelo total 100/5) sendo assim se os três primeiros genes forem bem sucedidosa taxa de sucesso desta partícula será de 60%
+
+Uma vez que a nossa população foi gerada, aplicada e executada nos resta realizar a avaliação daquilo que se julga ideal para formar a próxima geração, por exemplo qualquer partícula com taxa de sucesso maior ou igual a 40%. E conforme os ciclos de eveolução forem acontecendo essa taxa poderia ir subindo para 45, 50, 60 até que se chegue a 100%. Mas vale lembrar que o mundo não é composto apenas pela perfeição, os imperfeitos também fazem parte da sociedade, inclusive é uma boa ideia agregar partículas com baixa taxa de sucesso para serem cruzadas com as bem sucedidas, dessa mistura poderiam surgir partículas poderosas.
+
+
+O código fonte deste artigo está no meu repositório do github.
