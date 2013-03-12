@@ -7,14 +7,16 @@ class particula:
   global cromossomo;
   global totalComandos;
   global totalComandosSucedidos;
+  global nome
 
-  def __init__(self, genetica):
+  def __init__(self, nome, genetica):
     self.cromossomo = genetica;
     self.totalComandos = 0;
     self.totalComandosSucedidos = 0;
+    self.nome = nome
 
   def __str__(self):
-    return str(self.cromossomo)
+    return 'Nome: ' + self.nome + '. Mapa genético' + str(self.cromossomo)
 
   def genetica(self):
     return self.cromossomo

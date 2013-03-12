@@ -7,59 +7,27 @@ from particula import particula
 genetica = {};
 c = comando();
 
-'''
-Geração dos cromossomos
-'''
-'''
-ap = 'apagar';
-cp = 'copiar';
-at = 'atacar';
-tr = 'transferir';
-hp = 'hospedar';
-pp = 'propagar';
-dl = 'desligar';
-ex = 'executar';
-hb = 'hibernar';
-
-for i in range(1,11):
-  if (i == 1):
-    genetica[i] = (ap, cp)
-  elif (i == 2):
-    genetica[i] = (cp, ap)
-  elif (i == 3):
-    genetica[i] = (at, hp, pp, ex)
-  elif (i == 4):
-    genetica[i] = (ex, dl, at, ap)
-  elif (i == 5):
-    genetica[i] = (pp, hp, hb)
-  elif (i == 6):
-    genetica[i] = (ap, cp, tr, pp)
-  elif (i == 7):
-    genetica[i] = (dl, tr, cp, [ap, dl])
-  elif (i == 8):
-    genetica[i] = (pp, ap, [cp, pp, at])
-  elif (i == 9):
-    genetica[i] = (ap, hb)
-  elif (i == 10):
-    genetica[i] = (dl, hb)
-'''
+print '\nCRIANDO MAPAS GENÉTICOS ALEATORIAMENTE:'
 for i in range(1,11):
   genetica[i] = c.mutacao()
 
-variacoes = []
+print str(genetica)
 
 '''
 Criação das partículas (populacao)
 '''
+print '\nCRIANDO PARTÍCULAS COM BASE NAS GENÉTICAS DISPONÍVEIS:'
+variacoes = []
 for i in range(1,21):
   while (i >= 11):
     i = i - 3;
   while (i <= 0):
     i = i + 3;
-  p = particula(genetica[i])
+  p = particula('P'+str(i), genetica[i])
   variacoes.append(p)
 
-#print [str(v) for v in variacoes];
+for v in variacoes:
+  print str(v)
 
 arq_variacoes = open('variacoes', 'w')
 cPickle.dump(variacoes, arq_variacoes)

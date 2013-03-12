@@ -1,40 +1,35 @@
 #! /usr/bin/env python
 #-*- coding: utf-8 -*-
 
-#from Tvirus import comando
-#c = comando()
-#c.apagar()
-
-
-#PASSO 1 - CRIAR A POPULAÇÃO INICIAL
-'''
-  ao importar este script serão geradas algumas variações do T-Virus
-  as variações são salvas em um arquivo com o uso do cPickle
-'''
+from Tvirus import comando
 import gerador_particulas
-
-
-#PASSO 2 - EXECUTAR CICLO DE INFECÇÕES
 import cPickle
+
 variacoes = cPickle.load(open('variacoes'))
 nova_populacao = []
+print '\nINICIANDO INFECÇÃO PARA POPULAÇÃO INICIAL DE PARTÍCULAS'
 for v in variacoes:
   v.infectar()
   taxa = v.taxaSucesso()
-  #print (taxa)
+  print 'TAXA DE SUCESSO ' + str(taxa) + '. PARTICULA ' + str(v) 
   if taxa >= 50:
     nova_populacao.append(v)
+
+print '\nSELEÇÃO DOS MAIS FORTES CONCLUÍDA:'
+for np in nova_populacao:
+  print str(np)
 
 arq = open('nova_populacao', 'w')
 cPickle.dump(nova_populacao, arq)
 arq.close()
 
-
-#PASSO 3 - SEPARAR OS BEM SUCEDIDOS
 import cruzamento_particulas
 
-#PASSO 4 - EXIBIR POPULAÇÃO RESULTANTE
 variacoes = cPickle.load(open('novas_variacoes'))
+print '\nINICIANDO INFECÇÃO PARA SEGUNDA GERAÇÃO DE PARTÍCULAS'
 for v in variacoes:
   v.infectar()
   taxa = v.taxaSucesso()
+  print 'TAXA DE SUCESSO ' + str(taxa) + '. PARTICULA ' + str(v) 
+  if taxa >= 50:
+    nova_populacao.append(v)

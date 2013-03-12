@@ -16,6 +16,7 @@ nova_populacao = cPickle.load(open('nova_populacao'))
 '''
 Mutação (cruzamento) das melhores partículas 
 '''
+print '\nINICIANDO MUTAÇÃO/CRUZAMENTO DAS PARTÍCULAS MAIS FORTES'
 while (len(nova_populacao) >= 2):
   p1 = nova_populacao.pop()
   p2 = nova_populacao.pop()
@@ -26,9 +27,7 @@ while (len(nova_populacao) >= 2):
   for v in p2.genetica():
     variacao.append(v)
 
-  print variacao
-
-  p = particula( variacao )
+  p = particula( p1.nome + p2.nome, variacao )
   variacoes.append(p)
 
 arq_variacoes = open('novas_variacoes', 'w')
