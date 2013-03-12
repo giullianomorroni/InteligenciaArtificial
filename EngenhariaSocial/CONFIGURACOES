@@ -4,3 +4,13 @@ sudo easy_install twitter
 sudo yum install graphviz-python
 sudo yum install libgraphviz-dev
 sudo easy_install pygraphviz
+
+
+$ wget http://redis.googlecode.com/files/redis-2.6.11.tar.gz
+$ tar xzf redis-2.6.11.tar.gz
+$ cd redis-2.6.11
+$ make
+
+easy_install redis
+
+Iniciando Redis ./redis-server --port 6380
