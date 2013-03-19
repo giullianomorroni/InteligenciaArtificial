@@ -1,0 +1,13 @@
+sudo easy_install networkx
+sudo yum install numpy
+
+sudo yum install gcc
+sudo yum install gcc-c++
+
+git clone git://github.com/matplotlib/matplotlib.git
+sudo yum-builddep python-matplotlib
+$matplotlib/ python setup.py install
+
+
+sudo yum install 'graphviz*'
+sudo easy_install pygraphviz
