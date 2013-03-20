@@ -1,0 +1,70 @@
+#JSON USADO PARA ESTE ARTIGO
+{ "id":1,
+  "nome": "Giulliano",
+  "idade": 30,
+  "sexo": "M"
+}
+
+{ "id":2,
+  "nome": "Carlos",
+  "idade": 33,
+  "sexo": "M"
+}
+
+{ "id":3,
+  "nome": "Fernanda",
+  "idade": 22,
+  "sexo": "F"
+}
+
+{ "id":4,
+  "nome": "Joel",
+  "idade": 21,
+  "sexo": "M"
+}
+
+{ "id":5,
+  "nome": "Paula",
+  "idade": 31,
+  "sexo": "F"
+}
+
+
+#NOME DO BANCO 
+pessoas
+
+# EXEMPLO CRIAÇÃO DE UMA VIEW AGRUPADO POR SEXO
+{
+   "_id": "_design/pessoas",
+   "_rev": "2-7a0babed08f890eb3d4596feda404825",
+   "language": "javascript",
+   "views": {
+       "sexo": {
+           "map": "function(doc) { emit(doc.sexo, {'nome':doc.nome}); }"
+       }
+   }
+}
+
+#URL PARA ACESSAR ESSA VIEW
+http://localhost:5984/pessoas/_design/pessoas/_view/sexo
+
+#URL PARA ACESSAR ESSA VIEW COM UMA QUERY
+http://localhost:5984/pessoas/_design/pessoas/_view/sexo?key="M"
+
+
+# EXEMPLO CRIAÇÃO DE UM REDUÇÃO POR MAPEAMENTO
+#map
+function(doc) { emit(doc.sexo, {'nome':doc.nome, 'idade':doc.idade}); }
+#reduce
+function(keys, values, rereduce) {
+   resultado = 0
+   for (i in values) {
+      value = values[i]
+      _idade = value['idade']
+      if (_idade < 31) {
+	resultado += 1;
+      }   
+   }
+   return resultado
+}
+
