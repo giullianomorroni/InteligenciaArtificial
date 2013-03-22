@@ -15,9 +15,7 @@ FRIENDS_LIMIT = 5
 # You may need to setup your OAuth settings in twitter__login.py
 t = login()
 
-
 def getFriendIds(screen_name=None, user_id=None, friends_limit=10000):
-
     ids = []
     cursor = -1
     while cursor != 0:
@@ -35,7 +33,6 @@ def getFriendIds(screen_name=None, user_id=None, friends_limit=10000):
             'Fetched %i ids for %s' % (len(ids), screen_name or user_id)
         if len(ids) >= friends_limit:
             break
-
     return ids
 
 if __name__ == '__main__':

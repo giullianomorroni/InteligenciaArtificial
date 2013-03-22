@@ -35,7 +35,6 @@ def _getRemainingHits(t):
 # if the problem is a 503 error. Block until the rate limit is reset if
 # a rate limiting issue
 def handleTwitterHTTPError(e, t, wait_period=2):
-
     if wait_period > 3600: # Seconds
         print >> sys.stderr, 'Too many retries. Quitting.'
         raise e
@@ -114,53 +113,42 @@ def getUserInfo(
         response = makeTwitterRequest(t, 
                                       t.users.lookup,
                                       screen_name=screen_names_str)
-        
+
         if response is None:
             break
-                                    
+
         if type(response) is dict:  # Handle api quirk
             response = [response]
         for user_info in response:
-            r.set(getRedisIdByScreenName(user_info['screen_name'], 'info.json'),
-                  json.dumps(user_info))
-            r.set(getRedisIdByUserId(user_info['id'], 'info.json'), 
-                  json.dumps(user_info))
+            r.set(getRedisIdByScreenName(user_info['screen_name'], 'info.json'), json.dumps(user_info))
+            r.set(getRedisIdByUserId(user_info['id'], 'info.json'), json.dumps(user_info))
         info.extend(response)
 
     while len(user_ids) > 0:
         user_ids_str = ','.join([str(_id) for _id in user_ids[:100]])
         user_ids = user_ids[100:]
 
-        response = makeTwitterRequest(t, 
-                                      t.users.lookup,
-                                      user_id=user_ids_str)
-        
+        response = makeTwitterRequest(t, t.users.lookup, user_id=user_ids_str)
+
         if response is None:
             break
-                                    
+
         if type(response) is dict:  # Handle api quirk
             response = [response]
         for user_info in response:
-            r.set(getRedisIdByScreenName(user_info['screen_name'], 'info.json'),
-                  json.dumps(user_info))
-            r.set(getRedisIdByUserId(user_info['id'], 'info.json'), 
-                  json.dumps(user_info))
+            r.set(getRedisIdByScreenName(user_info['screen_name'], 'info.json'),json.dumps(user_info))
+            r.set(getRedisIdByUserId(user_info['id'], 'info.json'),json.dumps(user_info))
         info.extend(response)
-
-
     return info
 
 
 # Convenience functions
-
 def pp(_int):  # For nice number formatting
     locale.setlocale(locale.LC_ALL, '')
     return locale.format('%d', _int, True)
 
-
 def getRedisIdByScreenName(screen_name, key_name):
     return 'screen_name$' + screen_name + '$' + key_name
-
 
 def getRedisIdByUserId(user_id, key_name):
     return 'user_id$' + str(user_id) + '$' + key_name
