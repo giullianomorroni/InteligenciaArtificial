@@ -24,31 +24,26 @@ def generate():
 	random.shuffle(linha9)
 	random.shuffle(linha2)
 	tabuleiro = [ linha1, linha2, linha3, linha4, linha5, linha6, linha7, linha8, linha9 ]
-	#print tabuleiro
-	return tabuleiro
 
-tabuleiro = []
-valido = False
+	#print 'tabuleiro amostra'
+	#for x in tabuleiro:
+	#		print x
 
-def go():
-	tabuleiro = generate()
-	for x in range(8):
-		linhax = tabuleiro[x]
-		for z in range (9):
-			if len(tabuleiro) > z+1:
-				linhay = tabuleiro[z+1]
-				if (linhax != linhay):
-					v1 = linhax[z]
-					v2 = linhay[z]
+	for col in range(0,9):
+		#print 'col: ' + str(col)
+		for x in range(0,9):
+			linhax = tabuleiro[x]
+			#print 'linha x ' +str(linhax)
+			for z in range (x,9):
+				linhay = tabuleiro[z]
+				#print 'linha y ' +str(linhay)
+				if linhax != linhay:
+					v1 = linhax[col]
+					v2 = linhay[col]
+					#print 'comparando v1:' +str(v1)+ ' v2:'+str(v2)
 					if (v1 == v2 and v1 != 0):
-						print 'dados duplicados ' + str(v1) + ' ' +str(v2)
-						print 'x ' + str(linhax)
-						print 'y ' + str(linhay)
-						return go()
-				else:
-					return go()
-			if x == 8 and z == 8: return tabuleiro;
-tabuleiro = go()
-print 'tabuleiro gerado'
-for x in tabuleiro:
-	print x
+						#print 'dados duplicados ' + str(v1) + ' ' +str(v2)
+						#print 'x ' + str(linhax)
+						#print 'y ' + str(linhay)
+						return []
+	return tabuleiro;
